@@ -96,7 +96,7 @@ host -t TXT _acme-challenge.subdom.example.com
 ```
 This should show the descriptive text of the TXT record in the master zone file.
 
-### 5. Obtain the first certificate
+## Usage
 
 Use this command, substituting subdom.example.com by your (sub-)domain
 ```
@@ -110,8 +110,6 @@ certbot certonly --server https://acme-v02.api.letsencrypt.org/directory \
 Be patient when running this command; some steps may need a few minutes which may pass without giving any message.
 
 If no errors occur, you will find (soft links to) your certificates in /etc/letsencrypt/live/subdom.example.com.
-
-### 6. Renew the certificate
 
 The certificates expire after (about) 90 days. To renew them it is sufficient to run
 ```
