@@ -23,7 +23,7 @@ After a successful run the normal renewal invocation of certbot will renew the w
 
 *Note: Whenever example.com is mentioned in this README, you have to substitute it by your own domain.*
 
-### Why?
+### Why this script?
 
 Letsencrypt has become quite popular to obtain SSL certificates for single (sub-)domains. It is a bit more complicated to obtain a wildcard certificate (e.g. \*.example.com or \*.subdom.example.com), since letsencrypt will deliver such certificates only on the base of a dns authentication. If a DNS providers does not offer an API which allows such a modification, a solution may be to delegate a subdomain to a name server on a host under your control.
 
@@ -109,7 +109,7 @@ host subdom.example.com 999.888.777.666
 
 Now you have to instruct the provider of your domain name example.com to delegate a subdomain to your new name server:
 
-##### Scenario A
+##### For scenario A
 
 In your dns provider's zone file of example.com you will need a "glue record" for the nameserver of your zone \_acme-challenge.subdom.example.com. Thus the necessary entries should look this way:
 ```
@@ -124,7 +124,7 @@ _acme-challenge.example.com.          86400    IN NS   ns._acme-challenge.exampl
 ns._acme-challenge.example.com.       86400    IN A    999.888.777.666
 ```
 
-##### Scenario B
+##### For scenario B
 
 In your dns provider's zone file of example.com (with a "glue record" of ns.subdom.example.com) it should look this way:
 ```
