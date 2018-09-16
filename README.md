@@ -46,7 +46,7 @@ Obviously you must (now or later) add records for the (sub-)subdomains you want 
 
 Finally start the nameserver. In case of yadifa on Ubuntu this is done by
 ```
-systemctl reload yadifa.service
+systemctl start yadifa.service
 ```
 
 To look whether port 53 (DNS) is really served by your name server, you may call:
