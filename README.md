@@ -21,7 +21,7 @@ After a successful run the normal renewal invocation of certbot will renew the w
 
 ## Long description
 
-*Note: Whenever example.com is mentioned in this README, you have to substitute it by your own domain.*
+*Note: Wherever example.com is mentioned in this README, you have to substitute it by your own domain. Wherever 999.888.777.666 is mentioned, it has to be substituted by a real IP.*
 
 ### Why this script?
 
