@@ -63,6 +63,8 @@ _acme-challenge.subdom.example.com.  1800   IN  A           999.888.777.666
 _acme-challenge.subdom.example.com.  1800   IN  NS          ns._acme-challenge.subdom.example.com.
 ns                                   1800   IN  A           999.888.777.666
 ```
+An advantage of scenario A is: The name server is used only to obtain the certificate and may be shutdown afterwards - until the time has come to renew the certificate.
+
 
 ##### Scenario B
 
@@ -82,6 +84,8 @@ subdom.example.com.      1800   IN  NS          ns.subdom.example.com.
 ns                       1800   IN  A           999.888.777.666
 ...
 ```
+An advantage of scenario B is: You may easily add or modify subdomains \*.subdom.example.com by editing this zone file (and making the name server reload it).
+
 ##### For both scenarios
 
 The number 999.888.777.666 has to be substituted by the external IP of your server (in case you do not know it, try /sbin/ifconfig).
