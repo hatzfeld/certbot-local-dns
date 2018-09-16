@@ -93,22 +93,13 @@ The number 999.888.777.666 has to be substituted by the external IP of your serv
 
 For the script to work it is important to have the serial number in a row for itself, commented by "; serial EDITED BY ACME HOOK" as shown above. Please also note the low value of minimum ttl.
 
-Finally start the nameserver. In case of yadifa on Ubuntu this is done by
-```
-systemctl start yadifa.service
-```
+Finally start the nameserver. In case of yadifa on Ubuntu this is done by ```systemctl start yadifa.service```.
 
-To look whether port 53 (DNS) is really served by your name server, you may call:
-```
-lsof -Pi | grep :53
-```
+To look whether port 53 (DNS) is really served by your name server, you may call ```lsof -Pi | grep :53```.
 
 If a local resolver is blocking the internal (i.e. localhost) port 53 (as in my case), you may either substitute the internal resolver by your newly installed name server or limit the name server to serve port 53 only for external access (e.g. in yadifa's config file by "listen 999.888.777.666:53" instead of "listen :53").
 
-To test the name server, you may use e.g. this command:
-```
-host subdom.example.com 999.888.777.666
-```
+To test the name server, you may call e.g. ```host subdom.example.com 999.888.777.666```
 
 Now you have to instruct the provider of your domain name example.com to delegate a subdomain to your new name server:
 
@@ -149,10 +140,7 @@ curl -o /etc/letsencrypt/certbot-local-dns-auth.sh \
 chmod 755 /etc/letsencrypt/certbot-local-dns-auth.sh
 ```
 
-Use an editor to modify (at least) the values of ZONEFILE and DNSRELOADCMD in the configuration section, e.g. by
-```
-nano /etc/letsencrypt/certbot-local-dns-auth.sh
-```
+Use an editor to modify (at least) the values of ZONEFILE and DNSRELOADCMD in the configuration section, e.g. by ```nano /etc/letsencrypt/certbot-local-dns-auth.sh```
 
 #### 4. Test the hook
 
@@ -192,7 +180,4 @@ Be patient when running on of these commands; some steps may need a few minutes 
 
 If no errors occur, you will find (soft links to) your certificates in /etc/letsencrypt/live/subdom.example.com.
 
-The certificates expire after (about) 90 days. To renew them it is sufficient to run
-```
-certbot renew
-```
+The certificates expire after (about) 90 days. To renew them it is sufficient to run ```certbot renew```.
