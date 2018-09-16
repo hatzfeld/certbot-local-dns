@@ -21,7 +21,8 @@ After a successful run the normal renewal invocation of certbot will renew the w
 
 ## Long description
 
-*Note: Wherever example.com is mentioned in this README, you have to substitute it by your own domain. Wherever 999.888.777.666 is mentioned, it has to be substituted by a real IP.*
+*Note: Wherever example.com is mentioned in this README, you have to substitute it by your own domain.
+Wherever 999.888.777.666 is mentioned, it has to be substituted by the external IP of your server.*
 
 ### Why this script?
 
@@ -88,11 +89,9 @@ An advantage of scenario B is: You may easily add or modify subdomains \*.subdom
 
 ##### For both scenarios
 
-The number 999.888.777.666 has to be substituted by the external IP of your server (in case you do not know it, try /sbin/ifconfig).
+The number 999.888.777.666 has to be substituted by the external IP of your server (in case you do not know it, try ```/sbin/ifconfig``` and look for "inet").
 
 For the script to work it is important to have the serial number in a row for itself, commented by "; serial EDITED BY ACME HOOK" as shown above. Please also note the low value of minimum ttl.
-
-Obviously you must (now or later) add records for the (sub-)subdomains you want use with the wildcard certicate.
 
 Finally start the nameserver. In case of yadifa on Ubuntu this is done by
 ```
