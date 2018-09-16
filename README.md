@@ -7,9 +7,11 @@ Letsencrypt has become quite popular to obtain SSL certificates for single (sub-
 
 ## What does certbot-local-dns-auth.sh?
 
-certbot-local-dns-auth.sh is a small script which may be used by EFF's certbot for authentication.
+certbot-local-dns-auth.sh is a small bash script which may be used as a hook by EFF's certbot for authentication.
 
 It does this by modifying a master zone file of a domain name server running on the local host. This allows the automatic renewal of the wildcard certificate.
+
+The script is prepared for the name server **yadifa**, but may as well be used for other nameservers which support the common zone file syntax.
 
 ## Installation
 
