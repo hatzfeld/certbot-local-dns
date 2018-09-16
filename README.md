@@ -1,5 +1,5 @@
 # certbot-local-dns
-certbot authentication hook for a local domain name server
+certbot acme authentication hook for a local domain name server
 
 ## Why?
 
