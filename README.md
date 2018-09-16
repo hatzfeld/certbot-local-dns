@@ -14,7 +14,7 @@ It does this by modifying a master zone file of a domain name server running on 
 ## Installation
 
 ### 1. Install certbot 
-Use the package provider of your system (e.g. **apt install letsencrypt** or **apt install letsencrypt**) and/or the instructions at https://certbot.eff.org.
+Use the package provider of your system (e.g. **apt install letsencrypt** or **apt install certbot**) and/or the instructions at https://certbot.eff.org.
 
 ### 2. Install and configure DNS
 Follow the instructions of the domain name server you have installed or want to install. The author of this script used yadifad in the configuration of his Ubuntu 18.04 (**apt install yadifa**, config file: /etc/yadifa/yadifad.conf).
@@ -80,7 +80,7 @@ Use an editor to modify (at least) the values of ZONEFILE and DNSRELOADCMD in th
 nano /etc/letsencrypt/certbot-local-dns-auth.sh
 ```
 
-### 4. Testing the hook
+### 4. Test the hook
 
 If after calling
 ```
@@ -94,7 +94,7 @@ host -t TXT _acme-challenge.subdom.example.com
 ```
 This should show the descriptive text of the TXT record in the master zone file.
 
-### 5. Obtaining the certificate
+### 5. Obtain the first certificate
 
 Use this command, substituting subdom.example.com by your (sub-)domain
 ```
@@ -109,9 +109,9 @@ Be patient when running this command; some steps may need a few minutes which ma
 
 If no errors occur, you will find (soft links to) your certificates in /etc/letsencrypt/live/subdom.example.com.
 
-### 6. Renewing the certificate
+### 6. Renew the certificate
 
-It is sufficient to run
+The certificates expire after (about) 90 days. To renew them it is sufficient to run
 ```
 certbot renew
 ```
