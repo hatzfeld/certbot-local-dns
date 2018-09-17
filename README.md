@@ -178,7 +178,7 @@ certbot certonly --server https://acme-v02.api.letsencrypt.org/directory \
 
 Be patient when running on of these commands; some steps may need a few minutes which may pass without giving any message.
 
-If no errors occur, you will find (soft links to) your certificates in /etc/letsencrypt/live/subdom.example.com. If the certificate file will be used on the local host, it is a good option to write links to these files into the config files of your server software (e.g. apache).
+If no errors occur, you will find (soft links to) your certificates in /etc/letsencrypt/live/subdom.example.com. If the certificate file will be used on the local host, it is a good option to write the paths to these softlinks into the config files of your server software (e.g. apache). Do not use the filenames the softlinks point to; these may change with renewals.
 
 The certificates expire after (about) 90 days. To renew them it is sufficient to run ```certbot renew```. To test this manually before the certificates expire, use ```certbot renew --dry-run```. If you have to restart a service when a certificate has been renewed this way, you may use the hook ```--renew-hook```. To do this in a cron job e.g. for apache and postfix, put a line similar to this into root's crontab (for more informations call ```man crontab```):
 ```
