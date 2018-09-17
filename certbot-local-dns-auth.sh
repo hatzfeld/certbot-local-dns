@@ -3,7 +3,7 @@
 # Authentication hook for certbot 
 # using a local dns server with a master zone file
 
-# May be used as cleanup hook by calling it with argument "cleanup"
+# Version 0.9.1
 
 # Note: When setting up your zone file please take care that: 
 # * the serial number (i.e. the 1st number in the brackets behind SOA)
@@ -15,16 +15,20 @@
 #                                                3600            ; refresh
 #                                                1800            ; retry
 #                                                3600000         ; expire
-#                                                10              ; ttl
+#                                                10              ; minimum ttl
 #						)
+
+# Read https://github.com/hatzfeld/certbot-local-dns for further explanations!
 
 ###########################################################################
                 ###  Configuration Section  ###
 
-# You need to edit at least ZONEFILE and DNSRELOADCMD before using this script
+# Before using this script, make sure that $ZONEFILE and at least 
+# those $DNS*CMD you intend to use contain the correct values!
 
 # where your master zone file is located
-ZONEFILE="/var/lib/yadifa/masters/subdom.example.com.zone"
+# (you may use $CERTBOT_DOMAIN which will contain your (sub-)domain)
+ZONEFILE="/var/lib/yadifa/masters/$CERTBOT_DOMAIN.zone"
 
 # command to make the dns server apply changes in the master zone file
 # (used when invoked without arg or with arg "cleanup")
@@ -32,11 +36,11 @@ DNSRELOADCMD="systemctl reload yadifa.service"
 
 # command to start the dns server when it's inactive
 # (used when invoked with arg "start")
-DNSSTART="systemctl start yadifa.service"
+DNSSTARTCMD="systemctl start yadifa.service"
 
 # command to stop the dns server
 # (used when invoked with arg "stop")
-DNSSTOP="systemctl stop yadifa.service"
+DNSSTOPCMD="systemctl stop yadifa.service"
 
 # ttl of challenge TXT record (do not change it unless necessary)
 TTL=10
@@ -68,7 +72,7 @@ error=""
 if [ "$CERTBOT_DOMAIN" = "" ]; then
   acmesd="$ACMESUBDOMAIN"
   if [ "$MODE" != "cleanup" -a "$MODE" != "stop" ]; then
-    error="$error\nWARNING: environment variable CERTBOT_DOMAIN should be set to run $0"
+    error="$error\nWARNING: missing environment variable CERTBOT_DOMAIN"
   fi
 else
   acmesd="$ACMESUBDOMAIN.$CERTBOT_DOMAIN."
@@ -78,7 +82,7 @@ if [ "$CERTBOT_VALIDATION" = "" ]; then
   ts=$(date -Iseconds)
   CERTBOT_VALIDATION="_No_validation_string_provided_at_${ts}_"
   if [ "$MODE" != "cleanup" -a "$MODE" != "stop" ]; then
-    error="$error\nERROR: environment variable CERTBOT_VALIDATION must be set to run $0 correctly"
+    error="$error\nWARNING: missing environment variable CERTBOT_VALIDATION - using dummy value instead"
   fi
 fi
 
@@ -96,7 +100,7 @@ if [ $? -ne 0 ]; then
     cat "$ZONEFILE" >"$ZONEFILE.$$"
   else
     # delete eventual old validation code
-    grep -v "^$ACMESUBDOMAIN" "$ZONEFILE" >"$ZONEFILE.$$"
+    grep -v "^$ACMESUBDOMAIN.*TXT.*changed" "$ZONEFILE" >"$ZONEFILE.$$"
   fi
 else
   # get serial number
@@ -107,7 +111,7 @@ else
     cat "$ZONEFILE" | sed -r 's/^.*serial EDITED BY ACME HOOK.*$/                                  '"$snr"' ; serial EDITED BY ACME HOOK/' >"$ZONEFILE.$$"
   else
     # delete eventual old validation code
-    grep -v "^$ACMESUBDOMAIN" "$ZONEFILE" | sed -r 's/^.*serial EDITED BY ACME HOOK.*$/                                  '"$snr"' ; serial EDITED BY ACME HOOK/' >"$ZONEFILE.$$"
+    grep -v "^$ACMESUBDOMAIN.*TXT.*changed" "$ZONEFILE" | sed -r 's/^.*serial EDITED BY ACME HOOK.*$/                                  '"$snr"' ; serial EDITED BY ACME HOOK/' >"$ZONEFILE.$$"
   fi
 fi
 
@@ -125,10 +129,10 @@ if [ "$MODE" = "" -o "$MODE" = "cleanup" ]; then
   $DNSRELOADCMD
 fi
 if [ "$MODE" = "start" ]; then
-  $DNSSTART
+  $DNSSTARTCMD
 fi
 if [ "$MODE" = "stop" ]; then
-  $DNSSTOP
+  $DNSSTOPCMD
 fi
 
 # wait for new value to propagate
