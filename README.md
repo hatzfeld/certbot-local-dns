@@ -21,7 +21,7 @@ After a successful run the normal renewal invocation of certbot will renew the w
 
 If additional actions have to take place after each renewal of the certificate(s) you may add a hook to the invocation of renew:
 ```
-39 5 * * 1 certbot renew --renew-hook '/etc/letsencrypt/post_renewal.sh'
+certbot renew --renew-hook '/etc/letsencrypt/post_renewal.sh'
 ```
 
 ## Long description
@@ -189,7 +189,9 @@ The certificates expire after (about) 90 days. To **renew** them it is sufficien
 
 ### Unattended use
 
-Automatic renewal is possible by creating a call in root's crontab (for more informations see ```man crontab```):
+Some distributions (e.g. Ubuntu) have an active systemd-timer which will initiate certificate renewal automatically. You can look for such an active time by calling ```systemctl list-timers | grep certbot```.
+
+Alternativly automatic renewal is possible by creating a call in root's crontab (for more informations see ```man crontab```):
 ```
 39 5 * * 1 certbot renew
 ```
@@ -202,3 +204,5 @@ If more complicated actions have to be done after the renewal of any certificate
 ```
 39 5 * * 1 certbot renew --renew-hook '/etc/letsencrypt/post_renewal.sh'
 ```
+
+If you are an experienced user, you can change some renewal parameters by editing your domain file in /etc/letsencrypt/renewal. But be careful, since you may break the renewal process!
