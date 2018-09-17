@@ -21,7 +21,7 @@ After a successful run the normal renewal invocation of certbot will renew the w
 
 If additional actions have to take place after each renewal of the certificate(s) you may optionally add a hook to the invocation of renew:
 ```
-certbot renew --renew-hook '/etc/letsencrypt/certbot-renew-hook.sh'
+certbot renew --renew-hook [path]/certbot-renew-hook.sh
 ```
 A stub of such a renewal hook (certbot-renew-hook.sh) is included in this project.
 
@@ -203,7 +203,7 @@ If you have to restart a service when a certificate has been renewed this way, y
 ```
 If more complicated actions have to be done after the renewal of any certificates you will prefer to use an own script:
 ```
-39 5 * * 1 certbot renew --renew-hook '/etc/letsencrypt/certbot-renew-hook.sh'
+39 5 * * 1 certbot renew --renew-hook /etc/letsencrypt/certbot-renew-hook.sh
 ```
 You will find a stub of such a script file (certbot-renew-hook.sh) in this project.
 
