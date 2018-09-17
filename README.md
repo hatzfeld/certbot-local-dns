@@ -91,7 +91,7 @@ An advantage of scenario B is: You may easily add or modify subdomains \*.subdom
 
 The number 999.888.777.666 has to be substituted by the external IP of your server (in case you do not know it, try ```/sbin/ifconfig``` and look for "inet").
 
-For the script to work it is important to have the serial number in a row for itself, commented by "; serial EDITED BY ACME HOOK" as shown above. Please also note the low value of minimum ttl.
+For the script to work it is important to have the serial number in a row for itself, commented by "; serial EDITED BY ACME HOOK" as shown above. Please also note the low value of minimum ttl. Remember to put always a dot behind any top level domain to prevent $ORIGIN to be appended.
 
 Finally start the nameserver. In case of yadifa on Ubuntu this is done by ```systemctl start yadifa.service```.
 
@@ -154,7 +154,7 @@ To test the domain name system, call
 ```
 host -t TXT _acme-challenge.subdom.example.com
 ```
-This should show the descriptive text of the TXT record in the master zone file.
+This should show the descriptive text of the TXT record in the master zone file. Keep in mind that the changes made in your domain name provider's zone file will need some time to propagate.
 
 ### Usage
 
