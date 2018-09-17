@@ -204,5 +204,6 @@ If more complicated actions have to be done after the renewal of any certificate
 ```
 39 5 * * 1 certbot renew --renew-hook '/etc/letsencrypt/post_renewal.sh'
 ```
+You will find the stub of a script file post_renewal.sh in this project.
 
 If you are an experienced user, you can change some renewal parameters by editing your domain file in /etc/letsencrypt/renewal. But be careful, since you may break the renewal process!
