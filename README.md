@@ -44,7 +44,7 @@ Follow the instructions of the domain name server you have installed or want to 
 
 Special attention is needed to create the master zone file. There are two scenarios:
 
-##### Scenario A (not tested yet)
+##### Scenario A
 
 The master zone file describes the zone \_acme-challenge.subdom.example.com. In this way you will obtain certificates for the domains \*.subdom.example.com.
 
@@ -53,7 +53,7 @@ If you want to get certificates valid for all subdomains \*.example.com, the mas
 ```
 $TTL    86400   ; 24 hours
 $ORIGIN _acme-challenge.subdom.example.com.
-subdom.example.com.     86400   IN  SOA ns._acme-challenge.subdom.example.com.  webmaster.example.com. (
+_acme-challenge.subdom.example.com. 86400   IN  SOA ns._acme-challenge.subdom.example.com.  webmaster.example.com. (
                                                 1               ; serial EDITED BY ACME HOOK
                                                 3600            ; refresh
                                                 1800            ; retry
