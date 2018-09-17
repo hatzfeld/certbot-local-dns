@@ -140,7 +140,7 @@ curl -o /etc/letsencrypt/certbot-local-dns-auth.sh \
 chmod 755 /etc/letsencrypt/certbot-local-dns-auth.sh
 ```
 
-Use an editor to modify (at least) the values of ZONEFILE and DNSRELOADCMD in the configuration section, e.g. by ```nano /etc/letsencrypt/certbot-local-dns-auth.sh```
+Use an editor to make eventually necessary modifications in the configuration section, e.g. by ```nano /etc/letsencrypt/certbot-local-dns-auth.sh```.
 
 #### 4. Test the hook
 
@@ -180,8 +180,20 @@ Be patient when running on of these commands; some steps may need a few minutes 
 
 If no errors occur, you will find (soft links to) your certificates in /etc/letsencrypt/live/subdom.example.com. If the certificate file will be used on the local host, it is a good option to write the paths to these softlinks into the config files of your server software (e.g. apache). Do not use the filenames the softlinks point to; these may change with renewals.
 
-The certificates expire after (about) 90 days. To renew them it is sufficient to run ```certbot renew```. To test this manually before the certificates expire, use ```certbot renew --dry-run```. If you have to restart a service when a certificate has been renewed this way, you may use the hook ```--renew-hook```. To do this in a cron job e.g. for apache and postfix, put a line similar to this into root's crontab (for more informations call ```man crontab```):
+The certificates expire after (about) 90 days. To **renew** them it is sufficient to run ```certbot renew```. To test this manually before the certificates are about to expire, use ```certbot renew --dry-run```. 
+
+### Unattended use
+
+Automatic renewal is possible by creating a call in root's crontab (for more informations see ```man crontab```):
+```
+39 5 * * 1 certbot renew
+```
+
+If you have to restart a service when a certificate has been renewed this way, you may use certbot with ```--renew-hook```. To do this in a cron job e.g. for apache and postfix, put a line similar to this into the crontab:
 ```
 39 5 * * 1 certbot renew --renew-hook 'systemctl restart apache2.service' --renew-hook 'systemctl restart postfix.service'
 ```
-
+If more complicated actions have to be done after the renewal of any certificates you will prefer to use an own script:
+```
+39 5 * * 1 certbot renew --renew-hook '/etc/letsencrypt/post_renewal.sh'
+```
