@@ -19,10 +19,11 @@ certbot certonly [...] --manual \
 ```
 After a successful run the normal renewal invocation of certbot will renew the wildcard certificate without human intervention.
 
-If additional actions have to take place after each renewal of the certificate(s) you may add a hook to the invocation of renew:
+If additional actions have to take place after each renewal of the certificate(s) you may optionally add a hook to the invocation of renew:
 ```
 certbot renew --renew-hook '/etc/letsencrypt/certbot-renew-hook.sh'
 ```
+A stub of such a renewal hook (certbot-renew-hook.sh) is included in this project.
 
 ## Long description
 
@@ -204,6 +205,6 @@ If more complicated actions have to be done after the renewal of any certificate
 ```
 39 5 * * 1 certbot renew --renew-hook '/etc/letsencrypt/certbot-renew-hook.sh'
 ```
-You will find the stub of a script file certbot-renew-hook.sh.sh in this project.
+You will find a stub of such a script file (certbot-renew-hook.sh) in this project.
 
 If you are an experienced user, you can change some renewal parameters by editing your domain file in /etc/letsencrypt/renewal. But be careful, since you may break the renewal process!
