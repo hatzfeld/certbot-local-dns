@@ -19,6 +19,12 @@ certbot certonly [...] --manual \
 ```
 After a successful run the normal renewal invocation of certbot will renew the wildcard certificate without human intervention.
 
+If additional actions have to take place after each renewal of the certificate(s) you may optionally add a hook to the invocation of renew:
+```
+certbot renew --renew-hook [path]/certbot-renew-hook.sh
+```
+A stub of such a renewal hook (certbot-renew-hook.sh) is included in this project.
+
 ## Long description
 
 *Note: Wherever example.com is mentioned in this README, you have to substitute it by your own domain.
@@ -184,7 +190,9 @@ The certificates expire after (about) 90 days. To **renew** them it is sufficien
 
 ### Unattended use
 
-Automatic renewal is possible by creating a call in root's crontab (for more informations see ```man crontab```):
+Some distributions (e.g. Ubuntu) have an active systemd-timer which will initiate certificate renewal automatically. You can look for such an active time by calling ```systemctl list-timers | grep certbot```.
+
+Alternativly automatic renewal is possible by creating a call in root's crontab (for more informations see ```man crontab```):
 ```
 39 5 * * 1 certbot renew
 ```
@@ -195,5 +203,8 @@ If you have to restart a service when a certificate has been renewed this way, y
 ```
 If more complicated actions have to be done after the renewal of any certificates you will prefer to use an own script:
 ```
-39 5 * * 1 certbot renew --renew-hook '/etc/letsencrypt/post_renewal.sh'
+39 5 * * 1 certbot renew --renew-hook /etc/letsencrypt/certbot-renew-hook.sh
 ```
+You will find a stub of such a script file (certbot-renew-hook.sh) in this project.
+
+If you are an experienced user, you can change some renewal parameters by editing your domain file in /etc/letsencrypt/renewal. But be careful, since you may break the renewal process!
