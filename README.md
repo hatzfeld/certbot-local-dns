@@ -34,7 +34,7 @@ Wherever 999.888.777.666 is mentioned, it has to be substituted by the external 
 
 Letsencrypt has become quite popular to obtain SSL certificates for single (sub-)domains. It is a bit more complicated to obtain a wildcard certificate (e.g. \*.example.com or \*.subdom.example.com), since letsencrypt will deliver such certificates only on the base of a dns authentication. If a DNS providers does not offer an API which allows such a modification, a solution may be to delegate a subdomain to a name server on a host under your control.
 
-### What does certbot-local-dns-auth.sh?
+### What does certbot-local-dns-auth.sh do?
 
 certbot used with dns challenges makes it necessary to change certain DNS records in a specific way while certbot is running. The hook certbot-local-dns-auth.sh will apply these changes to a local master zone file. Thus it needs a domain name server running on the local host.
 
@@ -207,4 +207,4 @@ If more complicated actions have to be done after the renewal of any certificate
 ```
 You will find a stub of such a script file (certbot-renew-hook.sh) in this project.
 
-If you are an experienced user, you can change some renewal parameters by editing your domain file in /etc/letsencrypt/renewal. But be careful, since you may break the renewal process!
+If you are an experienced user, you can change some renewal parameters by editing your domain file in /etc/letsencrypt/renewal (which will be there after the first successful request of your certificate). But be careful, since you may break the renewal process!
