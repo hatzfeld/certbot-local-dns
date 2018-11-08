@@ -154,7 +154,7 @@ If after calling
 ```
 CERTBOT_DOMAIN=subdom.example.com /etc/letsencrypt/certbot-local-dns-auth.sh
 ```
-the zone file contains the serial number increased by 1 and a (last) line starting with \_acme-challenge, the hook seems to work.
+the zone file contains the serial number increased by 1 and a (last) line starting with \_acme-challenge, the hook seems to work (a warning about a missing environment variable CERTBOT_VALIDATION is not important here).
 
 To test the domain name system, call
 ```
