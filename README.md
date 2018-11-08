@@ -105,7 +105,7 @@ To look whether port 53 (DNS) is really served by your name server, you may call
 
 If a local resolver is blocking the internal (i.e. localhost) port 53 (as in my case), you may either substitute the internal resolver by your newly installed name server or limit the name server to serve port 53 only for external access (e.g. in yadifa's config file by "listen 999.888.777.666:53" instead of "listen :53").
 
-To test the name server, you may call e.g. ```host subdom.example.com 999.888.777.666```
+To test the name server, you may call e.g. ```host _acme-challenge.subdom.example.com 999.888.777.666```
 
 Now you have to instruct the provider of your domain name example.com to delegate a subdomain to your new name server:
 
