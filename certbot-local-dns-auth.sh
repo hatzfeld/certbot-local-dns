@@ -3,7 +3,7 @@
 # Authentication hook for certbot 
 # using a local dns server with a master zone file
 
-# Version 0.9.1
+# Version 0.9.2
 
 # Note: When setting up your zone file please take care that: 
 # * the serial number (i.e. the 1st number in the brackets behind SOA)
@@ -28,7 +28,8 @@
 
 # where your master zone file is located
 # (you may use $CERTBOT_DOMAIN which will contain your (sub-)domain)
-ZONEFILE="/var/lib/yadifa/masters/$CERTBOT_DOMAIN.zone"
+# ZONEFILE="/var/lib/yadifa/masters/$CERTBOT_DOMAIN.zone"
+ZONEFILE="/var/lib/yadifa/masters/_acme-challenge.$CERTBOT_DOMAIN.zone"
 
 # command to make the dns server apply changes in the master zone file
 # (used when invoked without arg or with arg "cleanup")
@@ -69,7 +70,7 @@ fi
 
 error=""
 
-if [ "$CERTBOT_DOMAIN" = "" ]; then
+if [ "$CERTBOT_DOMAIN" == "" ]; then
   acmesd="$ACMESUBDOMAIN"
   if [ "$MODE" != "cleanup" -a "$MODE" != "stop" ]; then
     error="$error\nWARNING: missing environment variable CERTBOT_DOMAIN"
@@ -78,7 +79,7 @@ else
   acmesd="$ACMESUBDOMAIN.$CERTBOT_DOMAIN."
 fi
 
-if [ "$CERTBOT_VALIDATION" = "" ]; then
+if [ "$CERTBOT_VALIDATION" == "" ]; then
   ts=$(date -Iseconds)
   CERTBOT_VALIDATION="_No_validation_string_provided_at_${ts}_"
   if [ "$MODE" != "cleanup" -a "$MODE" != "stop" ]; then
@@ -96,7 +97,7 @@ serialline=$(grep 'serial EDITED BY ACME HOOK' "$ZONEFILE")
 if [ $? -ne 0 ]; then
   error="$error\nERROR: serial number not found in SOA, will not be changed."
   snr=""
-  if [ "$MODE" = "" -o "$MODE" = "start" ]; then
+  if [ "$MODE" == "" -o "$MODE" == "start" ]; then
     cat "$ZONEFILE" >"$ZONEFILE.$$"
   else
     # delete eventual old validation code
@@ -107,7 +108,7 @@ else
   snr=${serialline//[^0-9]/}
   # increase it
   snr=$(($snr+1))
-  if [ "$MODE" = "" -o "$MODE" = "start" ]; then
+  if [ "$MODE" == "" -o "$MODE" == "start" ]; then
     cat "$ZONEFILE" | sed -r 's/^.*serial EDITED BY ACME HOOK.*$/                                  '"$snr"' ; serial EDITED BY ACME HOOK/' >"$ZONEFILE.$$"
   else
     # delete eventual old validation code
@@ -115,7 +116,7 @@ else
   fi
 fi
 
-if [ "$MODE" = "" -o "$MODE" = "start" ]; then
+if [ "$MODE" == "" -o "$MODE" == "start" ]; then
   # add challenge validation code
   echo -n "$acmesd $TTL IN TXT $CERTBOT_VALIDATION ; changed by $0 on " >>"$ZONEFILE.$$"
   date -R >>"$ZONEFILE.$$"
@@ -125,18 +126,18 @@ fi
 mv "$ZONEFILE.$$" "$ZONEFILE"
 
 # restart/reload/start/stop dns server
-if [ "$MODE" = "" -o "$MODE" = "cleanup" ]; then
+if [ "$MODE" == "" -o "$MODE" == "cleanup" ]; then
   $DNSRELOADCMD
 fi
-if [ "$MODE" = "start" ]; then
+if [ "$MODE" == "start" ]; then
   $DNSSTARTCMD
 fi
-if [ "$MODE" = "stop" ]; then
+if [ "$MODE" == "stop" ]; then
   $DNSSTOPCMD
 fi
 
 # wait for new value to propagate
-if [ "$MODE" = "" -o "$MODE" = "start" ]; then
+if [ "$MODE" == "" -o "$MODE" == "start" ]; then
   sleep $WAIT
 fi
 
