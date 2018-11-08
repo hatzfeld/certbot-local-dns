@@ -48,7 +48,7 @@ Use the package provider of your system (e.g. **apt install letsencrypt** or **a
 #### 2. Install and configure DNS
 Follow the instructions of the domain name server you have installed or want to install. The author of this script used yadifad in the configuration of his Ubuntu 18.04 (**apt install yadifa**, config file: /etc/yadifa/yadifad.conf).
 
-Special attention is needed to create the master zone file. There are two scenarios:
+Special attention is needed to create the master zone file (in case of yadifa situated in /var/lib/yadifa/masters/). There are two scenarios:
 
 ##### Scenario A
 
