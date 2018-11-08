@@ -173,7 +173,7 @@ certbot certonly --server https://acme-v02.api.letsencrypt.org/directory \
   -d subdom.example.com -d '*.subdom.example.com'
 ```
 
-With scenario B (see above) it is possible to start the nameserver with the invocation of certbot and to shut it down afterwards. If you wish to use this possibility, check the configuration section of the script for necessary changes and use this modified command to run certbot:
+With scenario A (see above) it is possible to start the nameserver with the invocation of certbot and to shut it down afterwards. If you wish to use this possibility, check the configuration section of the script for necessary changes and use this modified command to run certbot:
 ```
 certbot certonly --server https://acme-v02.api.letsencrypt.org/directory \
   --manual --manual-auth-hook "/etc/letsencrypt/certbot-local-dns-auth.sh start" \
