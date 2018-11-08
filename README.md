@@ -182,7 +182,9 @@ certbot certonly --server https://acme-v02.api.letsencrypt.org/directory \
   -d subdom.example.com -d '*.subdom.example.com'
 ```
 
-Be patient when running on of these commands; some steps may need a few minutes which may pass without giving any message.
+(Until 2018-11-08 a bug made this last call fail; this should be fixed now.)
+
+Be patient when running any of these commands; some steps may need a few minutes which may pass without giving any message.
 
 If no errors occur, you will find (soft links to) your certificates in /etc/letsencrypt/live/subdom.example.com. If the certificate file will be used on the local host, it is a good option to write the paths to these softlinks into the config files of your server software (e.g. apache). Do not use the filenames the softlinks point to; these may change with renewals.
 
