@@ -199,9 +199,9 @@ Alternativly automatic renewal is possible by creating a call in root's crontab 
 39 5 * * 1 certbot renew
 ```
 
-If you have to restart a service when a certificate has been renewed this way, you may use certbot with ```--renew-hook```. To do this in a cron job e.g. for apache and postfix, put a line similar to this into the crontab:
+If you have to restart a service when a certificate has been renewed this way, you may use certbot with ```--renew-hook```. To do this in a cron job e.g. for apache and postfix on a Ubuntu server, put a line similar to this into the crontab:
 ```
-39 5 * * 1 certbot renew --renew-hook 'systemctl restart apache2.service' --renew-hook 'systemctl restart postfix.service'
+39 5 * * 1 certbot renew --renew-hook '/bin/systemctl restart apache2.service' --renew-hook '/bin/systemctl restart postfix.service'
 ```
 If more complicated actions have to be done after the renewal of any certificates you will prefer to use an own script:
 ```
