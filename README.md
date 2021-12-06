@@ -17,9 +17,9 @@ certbot certonly [...] --manual \
    --manual-auth-hook "[path/]certbot-local-dns-auth.sh start" \
    --manual-cleanup-hook "[path/]certbot-local-dns-auth.sh stop" [...]
 ```
-After a successful run the normal renewal invocation of certbot will renew the wildcard certificate without human intervention.
+After a successful run, the normal renewal invocation of certbot will renew the wildcard certificate without human intervention.
 
-If additional actions have to take place after each renewal of the certificate(s) you may optionally add a hook to the invocation of renew:
+If additional actions have to take place after each renewal of the certificate(s), you may optionally add a hook to the invocation of renew:
 ```
 certbot renew --renew-hook [path]/certbot-renew-hook.sh
 ```
